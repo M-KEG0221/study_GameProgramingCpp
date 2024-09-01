@@ -13,6 +13,7 @@
 
 Actor::Actor(Game* game)
 	:mState(EActive)
+	, mCurrAnimState(0)// ‰Û‘è2
 	, mPosition(Vector2::Zero)
 	, mScale(1.0f)
 	, mRotation(0.0f)

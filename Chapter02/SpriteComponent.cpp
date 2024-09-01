@@ -12,10 +12,10 @@
 
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
 	:Component(owner)
-	,mTexture(nullptr)
-	,mDrawOrder(drawOrder)
-	,mTexWidth(0)
-	,mTexHeight(0)
+	, mTexture(nullptr)
+	, mDrawOrder(drawOrder)
+	, mTexWidth(0)
+	, mTexHeight(0)
 {
 	mOwner->GetGame()->AddSprite(this);
 }
@@ -42,7 +42,7 @@ void SpriteComponent::Draw(SDL_Renderer* renderer)
 			mTexture,
 			nullptr,
 			&r,
-			-Math::ToDegrees(mOwner->GetRotation()),
+			-Math::ToDegrees(mOwner->GetRotation()), //先頭の-はマイナス（SDLでは時計回りが正の角度＝数学での角度とは逆のため）
 			nullptr,
 			SDL_FLIP_NONE);
 	}

@@ -53,10 +53,6 @@ Ship::Ship(Game* game)
 
 	};
 	asc->SetAnimTextures(anims);
-	asc->PushAnimTexture(4);
-	asc->PushAnimTexture(6);
-	asc->PushAnimTexture(9);
-	asc->PushAnimTexture(3);
 
 	asc->PushAnimTexture(4);
 	asc->PushAnimTexture(6);

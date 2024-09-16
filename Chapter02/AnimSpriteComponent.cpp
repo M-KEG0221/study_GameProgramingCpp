@@ -44,7 +44,6 @@ void AnimSpriteComponent::Update(float deltaTime)
 		//ループしないアニメーションの場合、ラップで調整されるされる前に最後のframeを描画するようにする
 		if (!currentAnim.isLoop && mCurrFrame > currentAnim.last)
 		{
-			//まだ完璧じゃない（ごくたまにフレームがリセットされる
 			mCurrFrame = currentAnim.last;
 		}
 
@@ -52,17 +51,13 @@ void AnimSpriteComponent::Update(float deltaTime)
 		//課題2
 		while (mCurrFrame >= nextAnimStateHeadFrameIndex)
 		{
-			//if (mCurrFrame < 22 * 2)printf("before Wrap: %f\n", mCurrFrame);
-
 			//課題2 描画対象のアニメーションの枚数分減算するようにする
-			mCurrFrame -= currentAnim.CalcAnimFrames();
-
-			//if (mCurrFrame < 22 * 2)printf("after Wrap: %f, %d\n", mCurrFrame, currentAnim.CalcAnimFrames());
+			mCurrFrame -= currentAnim.CalcTotalFrames();
 		}
 
 		// Set the current texture
 		SetTexture(mAnimTextures[static_cast<int>(mCurrFrame)]);
-		//printf("draw: %d\n", static_cast<int>(mCurrFrame));
+
 		mOldAnimState = currAnimState;
 	}
 }
@@ -81,9 +76,6 @@ void AnimSpriteComponent::SetAnimTextures(const std::vector<SDL_Texture*>& textu
 //課題2
 int AnimSpriteComponent::CalcNextAnimStateHeadFrameIndex()
 {
-	//begin同士だと0になるため、animState+1で集計できるようにする
-	//return std::reduce(std::begin(mSumEachAnimFrames), std::next(std::begin(mSumEachAnimFrames), mOwner->GetCurrAnimState() + 1));
-
 	return mAnimations[mOwner->GetCurrAnimState()].last + 1;
 }
 
@@ -97,7 +89,6 @@ void AnimSpriteComponent::PushAnimTexture(const int totalFrame, const bool isLoo
 	if (pushedAnims == 0)
 	{
 		mAnimations.push_back(Animation(0, totalFrame - 1, isLoop));
-		//printf("%d| %d, %d\n", totalFrame, totalFrame - 1, isLoop);
 	}
 	else
 	{
@@ -108,11 +99,10 @@ void AnimSpriteComponent::PushAnimTexture(const int totalFrame, const bool isLoo
 			prevAnimLastIndex + totalFrame,
 			isLoop
 		));
-		//printf("%d| %d, %d, %d\n", totalFrame, prevAnimLastIndex + 1, prevAnimLastIndex + totalFrame, isLoop);
 	}
-	//printf("------------\n");
 }
 
+// 今回は未使用
 void AnimSpriteComponent::PushAnimTexture(const int head, const int tail, const bool isLoop)
 {
 	mAnimations.push_back(Animation(head, tail, isLoop));

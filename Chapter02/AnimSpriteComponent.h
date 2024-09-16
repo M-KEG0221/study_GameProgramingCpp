@@ -23,6 +23,7 @@ public:
 	// 課題2
 	int CalcNextAnimStateHeadFrameIndex();
 	void PushAnimTexture(const int totalFrame, const bool isLoop = true);
+	// 今回は未使用
 	void PushAnimTexture(const int first, const int last, const bool isLoop = true);
 
 	// Set/get the animation FPS
@@ -40,14 +41,14 @@ private:
 		int last;
 		bool isLoop;
 
-		int CalcAnimFrames() const { return last - first + 1; }
+		int CalcTotalFrames() const { return last - first + 1; }
 	};
 
 	// All textures in the animation
 	std::vector<SDL_Texture*> mAnimTextures;
 
 	//課題2
-	int mOldAnimState;					//1F前のownerのanimStateを管理
+	int mOldAnimState;					// 1F前のownerのanimStateを管理
 	std::vector<Animation> mAnimations; // 各Animの最初と最後のframeのindexを管理する
 
 	// Current frame displayed

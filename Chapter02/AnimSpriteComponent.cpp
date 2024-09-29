@@ -9,6 +9,7 @@
 #include "AnimSpriteComponent.h"
 #include "Math.h"
 #include "Actor.h"
+#include <iterator>
 
 AnimSpriteComponent::AnimSpriteComponent(Actor* owner, int drawOrder)
 	:SpriteComponent(owner, drawOrder)
@@ -44,7 +45,7 @@ void AnimSpriteComponent::Update(float deltaTime)
 		//ループしないアニメーションの場合、ラップで調整されるされる前に最後のframeを描画するようにする
 		if (!currentAnim.isLoop && mCurrFrame > currentAnim.last)
 		{
-			mCurrFrame = currentAnim.last;
+			mCurrFrame = static_cast<float>(currentAnim.last);
 		}
 
 		// Wrap current frame if needed
@@ -106,4 +107,33 @@ void AnimSpriteComponent::PushAnimTexture(const int totalFrame, const bool isLoo
 void AnimSpriteComponent::PushAnimTexture(const int head, const int tail, const bool isLoop)
 {
 	mAnimations.push_back(Animation(head, tail, isLoop));
+}
+int AnimSpriteComponent::PushAnimTexture(const std::vector<SDL_Texture*>& textures, const bool isLoop)
+{
+	int pushedAnims = mAnimations.size();
+
+	if (pushedAnims == 0)
+	{
+		mAnimations.push_back(Animation(0, textures.size() - 1, isLoop));
+	}
+	else
+	{
+		int prevAnimLastIndex = mAnimations[pushedAnims - 1].last;
+
+		mAnimations.push_back(Animation(
+			prevAnimLastIndex + 1,
+			prevAnimLastIndex + textures.size(),
+			isLoop
+		));
+	}
+
+	std::vector<SDL_Texture*> result;
+	result = mAnimTextures;
+
+	result.reserve(textures.size()); // 事前にメモリを確保することで効率化
+	std::copy(textures.begin(), textures.end(), std::back_inserter(result));
+	SetAnimTextures(result);
+
+	// 既に追加されてるアニメーション数 = 今回追加したアニメーションのインデックス
+	return pushedAnims;
 }

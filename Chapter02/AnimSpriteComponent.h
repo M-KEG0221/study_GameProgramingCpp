@@ -25,6 +25,7 @@ public:
 	void PushAnimTexture(const int totalFrame, const bool isLoop = true);
 	// ç°âÒÇÕñ¢égóp
 	void PushAnimTexture(const int first, const int last, const bool isLoop = true);
+	int PushAnimTexture(const std::vector<SDL_Texture*>& textures, const bool isLoop = true);
 
 	// Set/get the animation FPS
 	float GetAnimFPS() const { return mAnimFPS; }

@@ -8,6 +8,8 @@
 
 #pragma once
 #include <vector>
+#include <unordered_map>
+#include <string>
 #include "Math.h"
 class Actor
 {
@@ -51,6 +53,8 @@ public:
 protected:
 	//課題2 複数アニメーションに対応させる
 	void SetCurrAnimState(int currAnimState) { mCurrAnimState = currAnimState; }
+
+	std::unordered_map<int, int> mAnimStates;
 
 private:
 	// Actor's state

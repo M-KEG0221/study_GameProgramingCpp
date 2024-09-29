@@ -19,4 +19,11 @@ public:
 private:
 	float mRightSpeed;
 	float mDownSpeed;
+
+	enum ShipAnim {
+		ship,
+		walk,
+		jump,
+		punch
+	};
 };

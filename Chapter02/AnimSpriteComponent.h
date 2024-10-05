@@ -21,7 +21,6 @@ public:
 	void SetAnimTextures(const std::vector<SDL_Texture*>& textures);
 
 	// ‰Û‘è2
-	int CalcNextAnimStateHeadFrameIndex();
 	//void PushAnimTexture(const int totalFrame, const bool isLoop = true);
 	//void PushAnimTexture(const int first, const int last, const bool isLoop = true);
 	int RegisterAnimation(const std::vector<SDL_Texture*>& textures, const bool isLoop = true);
@@ -43,6 +42,7 @@ private:
 
 		int CalcTotalFrames() const { return last - first + 1; }
 	};
+	//int CalcNextAnimStateHeadFrameIndex();
 
 	// All textures in the animation
 	std::vector<SDL_Texture*> mAnimTextures;

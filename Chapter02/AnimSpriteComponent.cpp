@@ -29,8 +29,8 @@ void AnimSpriteComponent::Update(float deltaTime)
 		// and delta time
 		mCurrFrame += mAnimFPS * deltaTime;
 
-		//課題2 mAnimTexturesにおける描画対象のアニメーションの最後のFrameのindexを取得
-		int nextAnimStateHeadFrameIndex = CalcNextAnimStateHeadFrameIndex();
+		//課題2 
+		// int nextAnimStateHeadFrameIndex = mAnimations[mOwner->GetCurrAnimState()].last + 1;
 		int currAnimState = mOwner->GetCurrAnimState();
 		Animation currentAnim = mAnimations[currAnimState];
 
@@ -50,7 +50,8 @@ void AnimSpriteComponent::Update(float deltaTime)
 
 		// Wrap current frame if needed
 		//課題2
-		while (mCurrFrame >= nextAnimStateHeadFrameIndex)
+		// 『 > currentAnim.last』だと、キャスト時に小数点切り捨てとなり、1つ手前のアニメーションがチラチラ描画される
+		while (mCurrFrame >= currentAnim.last + 1)
 		{
 			//課題2 描画対象のアニメーションの枚数分減算するようにする
 			mCurrFrame -= currentAnim.CalcTotalFrames();
@@ -75,10 +76,10 @@ void AnimSpriteComponent::SetAnimTextures(const std::vector<SDL_Texture*>& textu
 }
 
 //課題2
-int AnimSpriteComponent::CalcNextAnimStateHeadFrameIndex()
-{
-	return mAnimations[mOwner->GetCurrAnimState()].last + 1;
-}
+//int AnimSpriteComponent::CalcNextAnimStateHeadFrameIndex()
+//{
+//	return mAnimations[mOwner->GetCurrAnimState()].last + 1;
+//}
 
 //デフォルト引数はhファイルにのみ書く
 //こっちにも書くと：コンパイルエラー（ https://qiita.com/yut-nagase/items/29d0fc0984e6dbace85e ）

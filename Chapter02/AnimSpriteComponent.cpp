@@ -83,32 +83,32 @@ int AnimSpriteComponent::CalcNextAnimStateHeadFrameIndex()
 //デフォルト引数はhファイルにのみ書く
 //こっちにも書くと：コンパイルエラー（ https://qiita.com/yut-nagase/items/29d0fc0984e6dbace85e ）
 //こっちにのみ書くと：構文エラー
-void AnimSpriteComponent::PushAnimTexture(const int totalFrame, const bool isLoop)
-{
-	int pushedAnims = mAnimations.size();
+//void AnimSpriteComponent::PushAnimTexture(const int totalFrame, const bool isLoop)
+//{
+//	int pushedAnims = mAnimations.size();
+//
+//	if (pushedAnims == 0)
+//	{
+//		mAnimations.push_back(Animation(0, totalFrame - 1, isLoop));
+//	}
+//	else
+//	{
+//		int prevAnimLastIndex = mAnimations[pushedAnims - 1].last;
+//
+//		mAnimations.push_back(Animation(
+//			prevAnimLastIndex + 1,
+//			prevAnimLastIndex + totalFrame,
+//			isLoop
+//		));
+//	}
+//}
 
-	if (pushedAnims == 0)
-	{
-		mAnimations.push_back(Animation(0, totalFrame - 1, isLoop));
-	}
-	else
-	{
-		int prevAnimLastIndex = mAnimations[pushedAnims - 1].last;
+//void AnimSpriteComponent::PushAnimTexture(const int head, const int tail, const bool isLoop)
+//{
+//	mAnimations.push_back(Animation(head, tail, isLoop));
+//}
 
-		mAnimations.push_back(Animation(
-			prevAnimLastIndex + 1,
-			prevAnimLastIndex + totalFrame,
-			isLoop
-		));
-	}
-}
-
-// 今回は未使用
-void AnimSpriteComponent::PushAnimTexture(const int head, const int tail, const bool isLoop)
-{
-	mAnimations.push_back(Animation(head, tail, isLoop));
-}
-int AnimSpriteComponent::PushAnimTexture(const std::vector<SDL_Texture*>& textures, const bool isLoop)
+int AnimSpriteComponent::RegisterAnimation(const std::vector<SDL_Texture*>& textures, const bool isLoop)
 {
 	int pushedAnims = mAnimations.size();
 

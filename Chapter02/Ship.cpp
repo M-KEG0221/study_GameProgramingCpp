@@ -59,7 +59,7 @@ Ship::Ship(Game* game)
 		game->GetTexture("Assets/Ship04.png"),
 	};
 
-	mAnimStates[ShipAnim::ship] = asc->PushAnimTexture(ship);
+	mAnimStates[ShipAnim::ship] = asc->RegisterAnimation(ship);
 	//ship.clear();
 
 	std::vector<SDL_Texture*> walk = {
@@ -70,7 +70,7 @@ Ship::Ship(Game* game)
 		game->GetTexture("Assets/Character05.png"),
 		game->GetTexture("Assets/Character06.png"),
 	};
-	mAnimStates[ShipAnim::walk] = asc->PushAnimTexture(walk);
+	mAnimStates[ShipAnim::walk] = asc->RegisterAnimation(walk);
 
 	std::vector<SDL_Texture*> jump = {
 		game->GetTexture("Assets/Character07.png"),
@@ -83,14 +83,14 @@ Ship::Ship(Game* game)
 		game->GetTexture("Assets/Character14.png"),
 		game->GetTexture("Assets/Character15.png"),
 	};
-	mAnimStates[ShipAnim::jump] = asc->PushAnimTexture(jump);
+	mAnimStates[ShipAnim::jump] = asc->RegisterAnimation(jump);
 
 	std::vector<SDL_Texture*> punch = {
 		game->GetTexture("Assets/Character16.png"),
 		game->GetTexture("Assets/Character17.png"),
 		game->GetTexture("Assets/Character18.png"),
 	};
-	mAnimStates[ShipAnim::punch] = asc->PushAnimTexture(punch, false);
+	mAnimStates[ShipAnim::punch] = asc->RegisterAnimation(punch, false);
 }
 
 void Ship::UpdateActor(float deltaTime)

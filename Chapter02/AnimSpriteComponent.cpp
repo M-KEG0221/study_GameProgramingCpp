@@ -131,7 +131,7 @@ int AnimSpriteComponent::RegisterAnimation(const std::vector<SDL_Texture*>& text
 	std::vector<SDL_Texture*> result;
 	result = mAnimTextures;
 
-	result.reserve(textures.size()); // 事前にメモリを確保することで効率化
+	result.reserve(mAnimTextures.size() + textures.size()); // 事前に追加分のメモリを確保することで効率化
 	std::copy(textures.begin(), textures.end(), std::back_inserter(result));
 	SetAnimTextures(result);
 

@@ -30,7 +30,6 @@ void AnimSpriteComponent::Update(float deltaTime)
 		mCurrFrame += mAnimFPS * deltaTime;
 
 		//課題2 
-		// int nextAnimStateHeadFrameIndex = mAnimations[mOwner->GetCurrAnimState()].last + 1;
 		int currAnimState = mOwner->GetCurrAnimState();
 		Animation currentAnim = mAnimations[currAnimState];
 
@@ -38,8 +37,6 @@ void AnimSpriteComponent::Update(float deltaTime)
 		if (mOldAnimState != currAnimState)
 		{
 			mCurrFrame = static_cast<float>(currentAnim.first);
-
-			//printf("change: %d\n", static_cast<int>(mCurrFrame));
 		}
 
 		//ループしないアニメーションの場合、ラップで調整されるされる前に最後のframeを描画するようにする

@@ -11,7 +11,6 @@
 #include <vector>
 #include <unordered_map>
 
-//template<typename TAnimState>
 class AnimSpriteComponent : public SpriteComponent
 {
 public:
@@ -22,8 +21,6 @@ public:
 	void SetAnimTextures(const std::vector<SDL_Texture*>& textures);
 
 	// ‰Û‘è2
-	//void PushAnimTexture(const int totalFrame, const bool isLoop = true);
-	//void PushAnimTexture(const int first, const int last, const bool isLoop = true);
 	//int RegisterAnimation(const std::vector<SDL_Texture*>& textures, const bool isLoop = true);
 	void RegisterAnimation(const int animStateKey, const std::vector<SDL_Texture*>& textures, const bool isLoop = true);
 
@@ -45,14 +42,12 @@ private:
 
 		int CalcTotalFrames() const { return last - first + 1; }
 	};
-	//int CalcNextAnimStateHeadFrameIndex();
 
 	// All textures in the animation
 	std::vector<SDL_Texture*> mAnimTextures;
 
 	//‰Û‘è2
 	int mOldAnimState;					// 1F‘O‚Ìowner‚ÌanimState‚ğŠÇ—
-	//std::vector<Animation> mAnimations; // ŠeAnim‚ÌÅ‰‚ÆÅŒã‚Ìframe‚Ìindex‚ğŠÇ—‚·‚é
 	std::unordered_map<int, Animation> mAnimations; // ŠeAnim‚ÌÅ‰‚ÆÅŒã‚Ìframe‚Ìindex‚ğŠÇ—‚·‚é
 
 	// Current frame displayed

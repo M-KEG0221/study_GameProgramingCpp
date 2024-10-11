@@ -76,65 +76,19 @@ void AnimSpriteComponent::SetAnimTextures(const std::vector<SDL_Texture*>& textu
 }
 
 //課題2
-//int AnimSpriteComponent::CalcNextAnimStateHeadFrameIndex()
-//{
-//	return mAnimations[mOwner->GetCurrAnimState()].last + 1;
-//}
-
 //デフォルト引数はhファイルにのみ書く
 //こっちにも書くと：コンパイルエラー（ https://qiita.com/yut-nagase/items/29d0fc0984e6dbace85e ）
 //こっちにのみ書くと：構文エラー
-//void AnimSpriteComponent::PushAnimTexture(const int totalFrame, const bool isLoop)
-//{
-//	int pushedAnims = mAnimations.size();
-//
-//	if (pushedAnims == 0)
-//	{
-//		mAnimations.push_back(Animation(0, totalFrame - 1, isLoop));
-//	}
-//	else
-//	{
-//		int prevAnimLastIndex = mAnimations[pushedAnims - 1].last;
-//
-//		mAnimations.push_back(Animation(
-//			prevAnimLastIndex + 1,
-//			prevAnimLastIndex + totalFrame,
-//			isLoop
-//		));
-//	}
-//}
-
-//void AnimSpriteComponent::PushAnimTexture(const int head, const int tail, const bool isLoop)
-//{
-//	mAnimations.push_back(Animation(head, tail, isLoop));
-//}
-
-int AnimSpriteComponent::RegisterAnimation(const std::vector<SDL_Texture*>& textures, const bool isLoop)
+void AnimSpriteComponent::RegisterAnimation(const int animStateKey, const std::vector<SDL_Texture*>& textures, const bool isLoop)
 {
-	int pushedAnims = mAnimations.size();
+	mAnimations[animStateKey] = Animation(
+		mAnimTextures.size(),
+		mAnimTextures.size() + textures.size() - 1,
+		isLoop
+	);
 
-	if (pushedAnims == 0)
-	{
-		mAnimations.push_back(Animation(0, textures.size() - 1, isLoop));
-	}
-	else
-	{
-		int prevAnimLastIndex = mAnimations[pushedAnims - 1].last;
-
-		mAnimations.push_back(Animation(
-			prevAnimLastIndex + 1,
-			prevAnimLastIndex + textures.size(),
-			isLoop
-		));
-	}
-
-	std::vector<SDL_Texture*> result;
-	result = mAnimTextures;
-
+	std::vector<SDL_Texture*> result = mAnimTextures;
 	result.reserve(mAnimTextures.size() + textures.size()); // 事前に追加分のメモリを確保することで効率化
 	std::copy(textures.begin(), textures.end(), std::back_inserter(result));
 	SetAnimTextures(result);
-
-	// 既に追加されてるアニメーション数 = 今回追加したアニメーションのインデックス
-	return pushedAnims;
 }

@@ -17,40 +17,6 @@ Ship::Ship(Game* game)
 {
 	// Create an animated sprite component
 	AnimSpriteComponent* asc = new AnimSpriteComponent(this);
-	/*std::vector<SDL_Texture*> anims = {
-		game->GetTexture("Assets/Ship01.png"),
-		game->GetTexture("Assets/Ship02.png"),
-		game->GetTexture("Assets/Ship03.png"),
-		game->GetTexture("Assets/Ship04.png"),
-
-		game->GetTexture("Assets/Character01.png"),
-		game->GetTexture("Assets/Character02.png"),
-		game->GetTexture("Assets/Character03.png"),
-		game->GetTexture("Assets/Character04.png"),
-		game->GetTexture("Assets/Character05.png"),
-		game->GetTexture("Assets/Character06.png"),
-
-		game->GetTexture("Assets/Character07.png"),
-		game->GetTexture("Assets/Character08.png"),
-		game->GetTexture("Assets/Character09.png"),
-		game->GetTexture("Assets/Character10.png"),
-		game->GetTexture("Assets/Character11.png"),
-		game->GetTexture("Assets/Character12.png"),
-		game->GetTexture("Assets/Character13.png"),
-		game->GetTexture("Assets/Character14.png"),
-		game->GetTexture("Assets/Character15.png"),
-
-		game->GetTexture("Assets/Character16.png"),
-		game->GetTexture("Assets/Character17.png"),
-		game->GetTexture("Assets/Character18.png"),
-
-	};
-	asc->SetAnimTextures(anims);
-
-	asc->PushAnimTexture(4);
-	asc->PushAnimTexture(6);
-	asc->PushAnimTexture(9);
-	asc->PushAnimTexture(3, false);*/
 
 	std::vector<SDL_Texture*> ship = {
 		game->GetTexture("Assets/Ship01.png"),
@@ -59,8 +25,7 @@ Ship::Ship(Game* game)
 		game->GetTexture("Assets/Ship04.png"),
 	};
 
-	mAnimStates[ShipAnim::ship] = asc->RegisterAnimation(ship);
-	//ship.clear();
+	asc->RegisterAnimation(ShipAnim::ship, ship);
 
 	std::vector<SDL_Texture*> walk = {
 		game->GetTexture("Assets/Character01.png"),
@@ -70,7 +35,7 @@ Ship::Ship(Game* game)
 		game->GetTexture("Assets/Character05.png"),
 		game->GetTexture("Assets/Character06.png"),
 	};
-	mAnimStates[ShipAnim::walk] = asc->RegisterAnimation(walk);
+	asc->RegisterAnimation(ShipAnim::walk, walk);
 
 	std::vector<SDL_Texture*> jump = {
 		game->GetTexture("Assets/Character07.png"),
@@ -83,14 +48,14 @@ Ship::Ship(Game* game)
 		game->GetTexture("Assets/Character14.png"),
 		game->GetTexture("Assets/Character15.png"),
 	};
-	mAnimStates[ShipAnim::jump] = asc->RegisterAnimation(jump);
+	asc->RegisterAnimation(ShipAnim::jump, jump);
 
 	std::vector<SDL_Texture*> punch = {
 		game->GetTexture("Assets/Character16.png"),
 		game->GetTexture("Assets/Character17.png"),
 		game->GetTexture("Assets/Character18.png"),
 	};
-	mAnimStates[ShipAnim::punch] = asc->RegisterAnimation(punch, false);
+	asc->RegisterAnimation(ShipAnim::punch, punch, false);
 }
 
 void Ship::UpdateActor(float deltaTime)
@@ -146,23 +111,19 @@ void Ship::ProcessKeyboard(const uint8_t* state)
 
 	if (state[SDL_SCANCODE_0])
 	{
-		//SetCurrAnimState(ShipState::ship);
-		SetCurrAnimState(mAnimStates[ShipAnim::ship]);
+		SetCurrAnimState(ShipAnim::ship);
 	}
 	if (state[SDL_SCANCODE_1])
 	{
-		//SetCurrAnimState(ShipState::walk);
-		SetCurrAnimState(mAnimStates[ShipAnim::walk]);
+		SetCurrAnimState(ShipAnim::walk);
 	}
 	if (state[SDL_SCANCODE_2])
 	{
-		//SetCurrAnimState(ShipState::jump);
-		SetCurrAnimState(mAnimStates[ShipAnim::jump]);
+		SetCurrAnimState(ShipAnim::jump);
 	}
 	if (state[SDL_SCANCODE_3])
 	{
-		//SetCurrAnimState(ShipState::punch);
-		SetCurrAnimState(mAnimStates[ShipAnim::punch]);
+		SetCurrAnimState(ShipAnim::punch);
 	}
 
 

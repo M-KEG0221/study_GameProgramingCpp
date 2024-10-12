@@ -78,6 +78,11 @@ void AnimSpriteComponent::SetAnimTextures(const std::vector<SDL_Texture*>& textu
 //こっちにのみ書くと：構文エラー
 void AnimSpriteComponent::RegisterAnimation(const int animStateKey, const std::vector<SDL_Texture*>& textures, const bool isLoop)
 {
+	if (textures.size() == 0)
+	{
+		SDL_Log("空のアニメーションが登録されかけました。");
+		return;
+	}
 	mAnimations[animStateKey] = Animation(
 		mAnimTextures.size(),
 		mAnimTextures.size() + textures.size() - 1,

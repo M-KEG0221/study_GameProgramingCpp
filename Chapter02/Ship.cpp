@@ -56,6 +56,10 @@ Ship::Ship(Game* game)
 		game->GetTexture("Assets/Character18.png"),
 	};
 	asc->RegisterAnimation(ShipAnim::punch, punch, false);
+
+	//空のアニメーション登録時、例外処理が走る
+	std::vector<SDL_Texture*> fake;
+	asc->RegisterAnimation(4, fake);
 }
 
 void Ship::UpdateActor(float deltaTime)

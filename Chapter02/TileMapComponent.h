@@ -24,8 +24,8 @@ private:
 	struct TileSet
 	{
 		SDL_Texture* mTexture;
-		int r = 1, c = 1;//0‚Å‚ÌœZ‚ğ‰ñ”ğ
-		int w, h;
+		int width, height;
+		int rows = 1, columns = 1;//0‚Å‚ÌœZ‚ğ‰ñ”ğ
 	};
 	TileSet mTileSet;
 

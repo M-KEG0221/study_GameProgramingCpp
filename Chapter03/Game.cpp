@@ -14,38 +14,39 @@
 #include "Ship.h"
 #include "Asteroid.h"
 #include "Random.h"
+#include <iostream>
 
 Game::Game()
-:mWindow(nullptr)
-,mRenderer(nullptr)
-,mIsRunning(true)
-,mUpdatingActors(false)
+	:mWindow(nullptr)
+	, mRenderer(nullptr)
+	, mIsRunning(true)
+	, mUpdatingActors(false)
 {
-	
+
 }
 
 bool Game::Initialize()
 {
-	if (SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) != 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 	{
 		SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
 		return false;
 	}
-	
+
 	mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 3)", 100, 100, 1024, 768, 0);
 	if (!mWindow)
 	{
 		SDL_Log("Failed to create window: %s", SDL_GetError());
 		return false;
 	}
-	
+
 	mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (!mRenderer)
 	{
 		SDL_Log("Failed to create renderer: %s", SDL_GetError());
 		return false;
 	}
-	
+
 	if (IMG_Init(IMG_INIT_PNG) == 0)
 	{
 		SDL_Log("Unable to initialize SDL_image: %s", SDL_GetError());
@@ -57,12 +58,15 @@ bool Game::Initialize()
 	LoadData();
 
 	mTicksCount = SDL_GetTicks();
-	
+
 	return true;
 }
 
 void Game::RunLoop()
 {
+	OutputProblem1();
+	OutputProblem2();
+
 	while (mIsRunning)
 	{
 		ProcessInput();
@@ -78,12 +82,12 @@ void Game::ProcessInput()
 	{
 		switch (event.type)
 		{
-			case SDL_QUIT:
-				mIsRunning = false;
-				break;
+		case SDL_QUIT:
+			mIsRunning = false;
+			break;
 		}
 	}
-	
+
 	const Uint8* keyState = SDL_GetKeyboardState(NULL);
 	if (keyState[SDL_SCANCODE_ESCAPE])
 	{
@@ -148,7 +152,7 @@ void Game::GenerateOutput()
 {
 	SDL_SetRenderDrawColor(mRenderer, 220, 220, 220, 255);
 	SDL_RenderClear(mRenderer);
-	
+
 	// Draw all sprite components
 	for (auto sprite : mSprites)
 	{
@@ -287,7 +291,7 @@ void Game::AddSprite(SpriteComponent* sprite)
 	// (The first element with a higher draw order than me)
 	int myDrawOrder = sprite->GetDrawOrder();
 	auto iter = mSprites.begin();
-	for ( ;
+	for (;
 		iter != mSprites.end();
 		++iter)
 	{
@@ -306,4 +310,51 @@ void Game::RemoveSprite(SpriteComponent* sprite)
 	// (We can't swap because it ruins ordering)
 	auto iter = std::find(mSprites.begin(), mSprites.end(), sprite);
 	mSprites.erase(iter);
+}
+
+void Game::OutputProblem1()
+{
+	Vector2 a(2, 4);
+	Vector2 b(3, 5);
+	float s = 2;
+	std::cout << "y‰Û‘è3.1-1za=<2,4>, b=<3,5>, s=2" << std::endl;
+
+	Vector2 ansA = a + b;// <2+3, 4+5> = <5,9>
+	std::cout << "(a): a+b = " << "<" << ansA.x << "," << ansA.y << ">" << std::endl;
+
+	Vector2 ansB = s * a;// <2*2, 2*4> = <4, 8>
+	std::cout << "(b): s.a = " << "<" << ansB.x << "," << ansB.y << ">" << std::endl;
+
+	float ansC = Vector2::Dot(a, b);//2*3+4*5 = 26
+	std::cout << "(c): a.b = " << ansC << std::endl;
+
+	std::cout << "----- " << std::endl;
+}
+
+void Game::OutputProblem2()
+{
+	Vector2 a(-1, 1);
+	Vector2 b(2, 4);
+	Vector2 c(3, 3);
+	std::cout << "y‰Û‘è3.1-2zA=<-1,1>, B=<2,4>, C=<3, 3>" << std::endl;
+
+	//AB‚ğ‹‚ß‚é
+	Vector2 ab(b - a);//<3, 3>
+	Vector2 abN = Vector2::Normalize(ab);//<3, 3>
+
+	//AC‚ğ‹‚ß‚é
+	Vector2 ac(c - a);//<4, 2>
+	Vector2 acN = Vector2::Normalize(ac);//<4, 2>
+
+	//Acos‚ÉAB‚ÆAC‚Ì³‹K‰»‚µ‚½’l‚ÌƒhƒbƒgÏ‚ğ—^‚¦‚é
+	float dot = Vector2::Dot(abN, acN);
+	float angle = Math::Acos(dot);
+
+	std::cout << "AB = " << "<" << ab.x << "," << ab.y << ">" << std::endl;
+	std::cout << "AB^ = " << "<" << abN.x << "," << abN.y << ">" << std::endl;
+	std::cout << "AC = " << "<" << ac.x << "," << ac.y << ">" << std::endl;
+	std::cout << "AC^ = " << "<" << acN.x << "," << acN.y << ">" << std::endl;
+	std::cout << "AB^.AC^ = " << dot << std::endl;
+	std::cout << "ƒÆ(AB‚ÆAC‚Ì‚È‚·Špj = " << angle << std::endl;
+	std::cout << "----- " << std::endl;
 }

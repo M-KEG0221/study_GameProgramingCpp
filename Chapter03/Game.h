@@ -25,7 +25,7 @@ public:
 
 	void AddSprite(class SpriteComponent* sprite);
 	void RemoveSprite(class SpriteComponent* sprite);
-	
+
 	SDL_Texture* GetTexture(const std::string& fileName);
 
 	// Game-specific (add/remove asteroid)
@@ -38,7 +38,9 @@ private:
 	void GenerateOutput();
 	void LoadData();
 	void UnloadData();
-	
+	void OutputProblem1();
+	void OutputProblem2();
+
 	// Map of textures loaded
 	std::unordered_map<std::string, SDL_Texture*> mTextures;
 

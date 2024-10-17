@@ -84,7 +84,7 @@ namespace Math
 	{
 		return acosf(value);
 	}
-	
+
 	inline float Atan2(float y, float x)
 	{
 		return atan2f(y, x);
@@ -104,7 +104,7 @@ namespace Math
 	{
 		return sqrtf(value);
 	}
-	
+
 	inline float Fmod(float numer, float denom)
 	{
 		return fmod(numer, denom);
@@ -120,12 +120,12 @@ public:
 
 	Vector2()
 		:x(0.0f)
-		,y(0.0f)
+		, y(0.0f)
 	{}
 
 	explicit Vector2(float inX, float inY)
 		:x(inX)
-		,y(inY)
+		, y(inY)
 	{}
 
 	// Set both components in one line
@@ -193,7 +193,7 @@ public:
 	// Length squared of vector
 	float LengthSq() const
 	{
-		return (x*x + y*y);
+		return (x * x + y * y);
 	}
 
 	// Length of vector
@@ -229,7 +229,7 @@ public:
 	{
 		return Vector2(a + f * (b - a));
 	}
-	
+
 	// Reflect V about (normalized) N
 	static Vector2 Reflect(const Vector2& v, const Vector2& n)
 	{
@@ -238,6 +238,7 @@ public:
 
 	// Transform vector by matrix
 	static Vector2 Transform(const Vector2& vec, const class Matrix3& mat, float w = 1.0f);
+	static float CalcAngle(const Vector2& from, const Vector2& to);
 
 	static const Vector2 Zero;
 	static const Vector2 UnitX;
@@ -256,14 +257,26 @@ public:
 
 	Vector3()
 		:x(0.0f)
-		,y(0.0f)
-		,z(0.0f)
+		, y(0.0f)
+		, z(0.0f)
 	{}
 
 	explicit Vector3(float inX, float inY, float inZ)
 		:x(inX)
-		,y(inY)
-		,z(inZ)
+		, y(inY)
+		, z(inZ)
+	{}
+
+	explicit Vector3(Vector2 vec)//explicitが必要か？
+		:x(vec.x)
+		, y(vec.y)
+		, z(0)
+	{}
+
+	explicit Vector3(Vector2 vec, float inZ)//explicitが必要か？
+		:x(vec.x)
+		, y(vec.y)
+		, z(inZ)
 	{}
 
 	// Cast to a const float pointer
@@ -340,7 +353,7 @@ public:
 	// Length squared of vector
 	float LengthSq() const
 	{
-		return (x*x + y*y + z*z);
+		return (x * x + y * y + z * z);
 	}
 
 	// Length of vector
@@ -387,7 +400,7 @@ public:
 	{
 		return Vector3(a + f * (b - a));
 	}
-	
+
 	// Reflect V about (normalized) N
 	static Vector3 Reflect(const Vector3& v, const Vector3& n)
 	{
@@ -439,39 +452,39 @@ public:
 	{
 		Matrix3 retVal;
 		// row 0
-		retVal.mat[0][0] = 
+		retVal.mat[0][0] =
 			left.mat[0][0] * right.mat[0][0] +
 			left.mat[0][1] * right.mat[1][0] +
 			left.mat[0][2] * right.mat[2][0];
 
-		retVal.mat[0][1] = 
+		retVal.mat[0][1] =
 			left.mat[0][0] * right.mat[0][1] +
 			left.mat[0][1] * right.mat[1][1] +
 			left.mat[0][2] * right.mat[2][1];
 
-		retVal.mat[0][2] = 
+		retVal.mat[0][2] =
 			left.mat[0][0] * right.mat[0][2] +
 			left.mat[0][1] * right.mat[1][2] +
 			left.mat[0][2] * right.mat[2][2];
-		
+
 		// row 1
-		retVal.mat[1][0] = 
+		retVal.mat[1][0] =
 			left.mat[1][0] * right.mat[0][0] +
 			left.mat[1][1] * right.mat[1][0] +
 			left.mat[1][2] * right.mat[2][0];
 
-		retVal.mat[1][1] = 
+		retVal.mat[1][1] =
 			left.mat[1][0] * right.mat[0][1] +
 			left.mat[1][1] * right.mat[1][1] +
 			left.mat[1][2] * right.mat[2][1];
 
-		retVal.mat[1][2] = 
+		retVal.mat[1][2] =
 			left.mat[1][0] * right.mat[0][2] +
 			left.mat[1][1] * right.mat[1][2] +
 			left.mat[1][2] * right.mat[2][2];
-		
+
 		// row 2
-		retVal.mat[2][0] = 
+		retVal.mat[2][0] =
 			left.mat[2][0] * right.mat[0][0] +
 			left.mat[2][1] * right.mat[1][0] +
 			left.mat[2][2] * right.mat[2][0];
@@ -481,7 +494,7 @@ public:
 			left.mat[2][1] * right.mat[1][1] +
 			left.mat[2][2] * right.mat[2][1];
 
-		retVal.mat[2][2] = 
+		retVal.mat[2][2] =
 			left.mat[2][0] * right.mat[0][2] +
 			left.mat[2][1] * right.mat[1][2] +
 			left.mat[2][2] * right.mat[2][2];
@@ -573,105 +586,105 @@ public:
 	{
 		Matrix4 retVal;
 		// row 0
-		retVal.mat[0][0] = 
-			a.mat[0][0] * b.mat[0][0] + 
-			a.mat[0][1] * b.mat[1][0] + 
+		retVal.mat[0][0] =
+			a.mat[0][0] * b.mat[0][0] +
+			a.mat[0][1] * b.mat[1][0] +
 			a.mat[0][2] * b.mat[2][0] +
 			a.mat[0][3] * b.mat[3][0];
 
-		retVal.mat[0][1] = 
-			a.mat[0][0] * b.mat[0][1] + 
-			a.mat[0][1] * b.mat[1][1] + 
-			a.mat[0][2] * b.mat[2][1] + 
+		retVal.mat[0][1] =
+			a.mat[0][0] * b.mat[0][1] +
+			a.mat[0][1] * b.mat[1][1] +
+			a.mat[0][2] * b.mat[2][1] +
 			a.mat[0][3] * b.mat[3][1];
 
-		retVal.mat[0][2] = 
-			a.mat[0][0] * b.mat[0][2] + 
-			a.mat[0][1] * b.mat[1][2] + 
-			a.mat[0][2] * b.mat[2][2] + 
+		retVal.mat[0][2] =
+			a.mat[0][0] * b.mat[0][2] +
+			a.mat[0][1] * b.mat[1][2] +
+			a.mat[0][2] * b.mat[2][2] +
 			a.mat[0][3] * b.mat[3][2];
-		
-		retVal.mat[0][3] = 
-			a.mat[0][0] * b.mat[0][3] + 
-			a.mat[0][1] * b.mat[1][3] + 
-			a.mat[0][2] * b.mat[2][3] + 
+
+		retVal.mat[0][3] =
+			a.mat[0][0] * b.mat[0][3] +
+			a.mat[0][1] * b.mat[1][3] +
+			a.mat[0][2] * b.mat[2][3] +
 			a.mat[0][3] * b.mat[3][3];
 
 		// row 1
-		retVal.mat[1][0] = 
-			a.mat[1][0] * b.mat[0][0] + 
-			a.mat[1][1] * b.mat[1][0] + 
-			a.mat[1][2] * b.mat[2][0] + 
+		retVal.mat[1][0] =
+			a.mat[1][0] * b.mat[0][0] +
+			a.mat[1][1] * b.mat[1][0] +
+			a.mat[1][2] * b.mat[2][0] +
 			a.mat[1][3] * b.mat[3][0];
 
-		retVal.mat[1][1] = 
-			a.mat[1][0] * b.mat[0][1] + 
-			a.mat[1][1] * b.mat[1][1] + 
-			a.mat[1][2] * b.mat[2][1] + 
+		retVal.mat[1][1] =
+			a.mat[1][0] * b.mat[0][1] +
+			a.mat[1][1] * b.mat[1][1] +
+			a.mat[1][2] * b.mat[2][1] +
 			a.mat[1][3] * b.mat[3][1];
 
-		retVal.mat[1][2] = 
-			a.mat[1][0] * b.mat[0][2] + 
-			a.mat[1][1] * b.mat[1][2] + 
-			a.mat[1][2] * b.mat[2][2] + 
+		retVal.mat[1][2] =
+			a.mat[1][0] * b.mat[0][2] +
+			a.mat[1][1] * b.mat[1][2] +
+			a.mat[1][2] * b.mat[2][2] +
 			a.mat[1][3] * b.mat[3][2];
 
-		retVal.mat[1][3] = 
+		retVal.mat[1][3] =
 			a.mat[1][0] * b.mat[0][3] +
 			a.mat[1][1] * b.mat[1][3] +
 			a.mat[1][2] * b.mat[2][3] +
 			a.mat[1][3] * b.mat[3][3];
 
 		// row 2
-		retVal.mat[2][0] = 
+		retVal.mat[2][0] =
 			a.mat[2][0] * b.mat[0][0] +
 			a.mat[2][1] * b.mat[1][0] +
 			a.mat[2][2] * b.mat[2][0] +
 			a.mat[2][3] * b.mat[3][0];
 
-		retVal.mat[2][1] = 
-			a.mat[2][0] * b.mat[0][1] + 
-			a.mat[2][1] * b.mat[1][1] + 
-			a.mat[2][2] * b.mat[2][1] + 
+		retVal.mat[2][1] =
+			a.mat[2][0] * b.mat[0][1] +
+			a.mat[2][1] * b.mat[1][1] +
+			a.mat[2][2] * b.mat[2][1] +
 			a.mat[2][3] * b.mat[3][1];
 
-		retVal.mat[2][2] = 
+		retVal.mat[2][2] =
 			a.mat[2][0] * b.mat[0][2] +
-			a.mat[2][1] * b.mat[1][2] + 
-			a.mat[2][2] * b.mat[2][2] + 
+			a.mat[2][1] * b.mat[1][2] +
+			a.mat[2][2] * b.mat[2][2] +
 			a.mat[2][3] * b.mat[3][2];
 
-		retVal.mat[2][3] = 
-			a.mat[2][0] * b.mat[0][3] + 
-			a.mat[2][1] * b.mat[1][3] + 
-			a.mat[2][2] * b.mat[2][3] + 
+		retVal.mat[2][3] =
+			a.mat[2][0] * b.mat[0][3] +
+			a.mat[2][1] * b.mat[1][3] +
+			a.mat[2][2] * b.mat[2][3] +
 			a.mat[2][3] * b.mat[3][3];
 
 		// row 3
-		retVal.mat[3][0] = 
-			a.mat[3][0] * b.mat[0][0] + 
-			a.mat[3][1] * b.mat[1][0] + 
-			a.mat[3][2] * b.mat[2][0] + 
+		retVal.mat[3][0] =
+			a.mat[3][0] * b.mat[0][0] +
+			a.mat[3][1] * b.mat[1][0] +
+			a.mat[3][2] * b.mat[2][0] +
 			a.mat[3][3] * b.mat[3][0];
 
-		retVal.mat[3][1] = 
-			a.mat[3][0] * b.mat[0][1] + 
-			a.mat[3][1] * b.mat[1][1] + 
-			a.mat[3][2] * b.mat[2][1] + 
+		retVal.mat[3][1] =
+			a.mat[3][0] * b.mat[0][1] +
+			a.mat[3][1] * b.mat[1][1] +
+			a.mat[3][2] * b.mat[2][1] +
 			a.mat[3][3] * b.mat[3][1];
 
-		retVal.mat[3][2] = 
+		retVal.mat[3][2] =
 			a.mat[3][0] * b.mat[0][2] +
 			a.mat[3][1] * b.mat[1][2] +
 			a.mat[3][2] * b.mat[2][2] +
 			a.mat[3][3] * b.mat[3][2];
 
-		retVal.mat[3][3] = 
+		retVal.mat[3][3] =
 			a.mat[3][0] * b.mat[0][3] +
 			a.mat[3][1] * b.mat[1][3] +
 			a.mat[3][2] * b.mat[2][3] +
 			a.mat[3][3] * b.mat[3][3];
-		
+
 		return retVal;
 	}
 
@@ -689,7 +702,7 @@ public:
 	{
 		return Vector3(mat[3][0], mat[3][1], mat[3][2]);
 	}
-	
+
 	// Get the X axis of the matrix (forward)
 	Vector3 GetXAxis() const
 	{
@@ -847,14 +860,14 @@ public:
 	{
 		float temp[4][4] =
 		{
-			{ 2.0f/width, 0.0f, 0.0f, 0.0f },
-			{ 0.0f, 2.0f/height, 0.0f, 0.0f },
+			{ 2.0f / width, 0.0f, 0.0f, 0.0f },
+			{ 0.0f, 2.0f / height, 0.0f, 0.0f },
 			{ 0.0f, 0.0f, 1.0f, 0.0f },
 			{ 0.0f, 0.0f, 1.0f, 1.0f }
 		};
 		return Matrix4(temp);
 	}
-	
+
 	static const Matrix4 Identity;
 };
 
@@ -909,7 +922,7 @@ public:
 
 	float LengthSq() const
 	{
-		return (x*x + y*y + z*z + w*w);
+		return (x * x + y * y + z * z + w * w);
 	}
 
 	float Length() const

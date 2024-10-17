@@ -40,6 +40,7 @@ private:
 	void UnloadData();
 	void OutputProblem1();
 	void OutputProblem2();
+	void OutputProblem3();
 
 	// Map of textures loaded
 	std::unordered_map<std::string, SDL_Texture*> mTextures;

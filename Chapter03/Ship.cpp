@@ -9,12 +9,13 @@
 #include "Ship.h"
 #include "SpriteComponent.h"
 #include "InputComponent.h"
+#include "CircleComponent.h"
 #include "Game.h"
 #include "Laser.h"
 
 Ship::Ship(Game* game)
 	:Actor(game)
-	,mLaserCooldown(0.0f)
+	, mLaserCooldown(0.0f)
 {
 	// Create a sprite component
 	SpriteComponent* sc = new SpriteComponent(this, 150);
@@ -28,11 +29,19 @@ Ship::Ship(Game* game)
 	ic->SetCounterClockwiseKey(SDL_SCANCODE_D);
 	ic->SetMaxForwardSpeed(300.0f);
 	ic->SetMaxAngularSpeed(Math::TwoPi);
+
+	//
+	mCircle = new CircleComponent(this);
+	mCircle->SetRadius(40.0f);
 }
 
 void Ship::UpdateActor(float deltaTime)
 {
 	mLaserCooldown -= deltaTime;
+	//gameからmAsteeroidを取得
+	//ループ処理でintersept()をして衝突検知
+	//衝突したら画面の中心（最初の位置＝最初に設定された値？）
+	//追加：衝突した時のdeltatimeを記録し、そこから1秒間（1000deltaTime?）deltatimeが経過したら再描画処理を始める
 }
 
 void Ship::ActorInput(const uint8_t* keyState)

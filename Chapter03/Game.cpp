@@ -66,6 +66,7 @@ void Game::RunLoop()
 {
 	OutputProblem1();
 	OutputProblem2();
+	OutputProblem3();
 
 	while (mIsRunning)
 	{
@@ -356,5 +357,30 @@ void Game::OutputProblem2()
 	std::cout << "AC^ = " << "<" << acN.x << "," << acN.y << ">" << std::endl;
 	std::cout << "AB^.AC^ = " << dot << std::endl;
 	std::cout << "ƒÆ(AB‚ÆAC‚Ì‚È‚·Špj = " << angle << std::endl;
+	std::cout << "ƒÆ(AB‚ÆAC‚Ì‚È‚·Špj = " << Vector2::CalcAngle(ab, ac) << std::endl;//Šp“xŒvŽZ‚ÌŠÖ”‰»
 	std::cout << "----- " << std::endl;
+}
+
+void Game::OutputProblem3()
+{
+	Vector2 wp(1, 0);
+	Vector2 player(4, 0);
+	Vector2 nwp(5, 6);
+	std::cout << "y‰Û‘è3.1-3z" << std::endl;
+
+	Vector2 nwpN = Vector2::Normalize(nwp);
+	std::cout << "(a): newWaypoint‚Ì’PˆÊƒxƒNƒgƒ‹ = " <<
+		"<" << nwpN.x << "," << nwpN.y << ">"
+		<< std::endl;
+
+	Vector2 pToWp = wp - player;
+	Vector2 pToNwp = nwp - player;
+	std::cout << "(b): player‚©‚ç‚Ý‚½V‹Œwaypoint‚Ì‰ñ“]Šp = " << Vector2::CalcAngle(pToWp, pToNwp) << std::endl;
+
+	Vector3 pToWp3(pToWp);
+	Vector3 pToNwp3(pToNwp);
+	Vector3 cross = Vector3::Cross(pToWp3, pToNwp3);
+	std::cout << "(c): V‹Œwaypoint‚©‚ç‚È‚é•½–Ê‚É’¼s‚·‚éƒxƒNƒgƒ‹ " <<
+		"<" << cross.x << "," << cross.y << "," << cross.z << ">"
+		<< std::endl;
 }

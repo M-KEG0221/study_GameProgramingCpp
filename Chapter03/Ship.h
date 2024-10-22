@@ -17,6 +17,15 @@ public:
 	void ActorInput(const uint8_t* keyState) override;
 	class CircleComponent* GetCircle() { return mCircle; }
 private:
+	enum class ShipState {
+		Alive, Dead
+	};
+	ShipState mState;
+	class SpriteComponent* mSc;
+
 	float mLaserCooldown;
 	class CircleComponent* mCircle;
+
+	float mRespawnTime;
+	float mElapsedDeadTime;
 };

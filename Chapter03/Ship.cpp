@@ -12,14 +12,19 @@
 #include "CircleComponent.h"
 #include "Game.h"
 #include "Laser.h"
+#include "Asteroid.h"
+#include <iostream>
 
 Ship::Ship(Game* game)
 	:Actor(game)
 	, mLaserCooldown(0.0f)
+	, mRespawnTime(2.0f)
+	, mElapsedDeadTime(0.0f)
+	, mState(ShipState::Alive)
 {
 	// Create a sprite component
-	SpriteComponent* sc = new SpriteComponent(this, 150);
-	sc->SetTexture(game->GetTexture("Assets/Ship.png"));
+	mSc = new SpriteComponent(this, 150);
+	mSc->SetTexture(game->GetTexture("Assets/Ship.png"));
 
 	// Create an input component and set keys/speed
 	InputComponent* ic = new InputComponent(this);
@@ -38,10 +43,39 @@ Ship::Ship(Game* game)
 void Ship::UpdateActor(float deltaTime)
 {
 	mLaserCooldown -= deltaTime;
+
 	//gameからmAsteeroidを取得
-	//ループ処理でintersept()をして衝突検知
-	//衝突したら画面の中心（最初の位置＝最初に設定された値？）
-	//追加：衝突した時のdeltatimeを記録し、そこから1秒間（1000deltaTime?）deltatimeが経過したら再描画処理を始める
+	Game* game = GetGame();
+	std::vector<Asteroid*> asteroids = game->GetAsteroids();
+
+	switch (mState)
+	{
+	case ShipState::Alive:
+		for (auto asteroid : asteroids)
+		{
+			if (Intersect(*asteroid->GetCircle(), *mCircle))
+			{
+				mState = ShipState::Dead;
+				mSc->SetTexture(nullptr);
+			}
+		}
+		break;
+	case ShipState::Dead:
+		mElapsedDeadTime += deltaTime;
+
+		if (mElapsedDeadTime >= mRespawnTime) {
+			mElapsedDeadTime = 0.0f;
+
+			SetPosition(Vector2(512.0f, 384.0f));
+			SetRotation(Math::PiOver2);
+
+			mState = ShipState::Alive;
+			mSc->SetTexture(game->GetTexture("Assets/Ship.png"));
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 void Ship::ActorInput(const uint8_t* keyState)

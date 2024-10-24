@@ -28,17 +28,14 @@ public:
 	void AddForce();
 	void SetFriction(float friction) { mFriction = friction; }
 	void ResetVelocity() { mVerocity = Vector2(); }
-	//void AddForce(float force) { mForce += force; }
 private:
 	// Controls rotation (radians/second)
 	float mAngularSpeed;
 	// Controls forward movement (units/second)
 	float mForwardSpeed;
 
-	Vector2 mForce;
-	//float mForce;
 	float mMass = 1.0f;//0èúéZâÒî
-	//float mVerocity;
+	Vector2 mForce;
 	Vector2 mVerocity;
 
 	float mFriction = 0;

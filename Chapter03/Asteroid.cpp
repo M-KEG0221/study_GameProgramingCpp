@@ -32,24 +32,19 @@ Asteroid::Asteroid(Game* game)
 	// Create a move component, and set a forward speed
 	//MoveComponent* mc = new MoveComponent(this);
 	//mc->SetForwardSpeed(150.0f);
-	mMove = new MoveComponent(this);
-	mMove->SetForwardSpeed(150.0f);
+	mMc = new MoveComponent(this);
+	mMc->SetForwardSpeed(150.0f);
 
 	// Create a circle component (for collision)
 	mCircle = new CircleComponent(this);
 	mCircle->SetRadius(40.0f);
 
 	//deltaTIme‚ª’Ç‰Á‚Å1‰ñæŽZ‚³‚ê‚é•ªA1/60•b‚Ö‚©‚¯‚é—Í‚ð‹­‰»‚·‚é
-	mMove->AddForce(150.0f * 60);
+	mMc->AddForce(150.0f * 60);
 
 	// Add to mAsteroids in game
 	game->AddAsteroid(this);
 
-}
-
-void Asteroid::UpdateActor(float deltaTime)
-{
-	//mMove->AddForce(GetForward() * 150.0f);
 }
 
 Asteroid::~Asteroid()

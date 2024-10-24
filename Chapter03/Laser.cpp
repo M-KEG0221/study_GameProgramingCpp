@@ -12,10 +12,11 @@
 #include "Game.h"
 #include "CircleComponent.h"
 #include "Asteroid.h"
+#include <iostream>
 
 Laser::Laser(Game* game)
 	:Actor(game)
-	,mDeathTimer(1.0f)
+	, mDeathTimer(1.0f)
 {
 	// Create a sprite component
 	SpriteComponent* sc = new SpriteComponent(this);
@@ -24,6 +25,7 @@ Laser::Laser(Game* game)
 	// Create a move component, and set a forward speed
 	MoveComponent* mc = new MoveComponent(this);
 	mc->SetForwardSpeed(800.0f);
+	mMc = mc;
 
 	// Create a circle component (for collision)
 	mCircle = new CircleComponent(this);
@@ -53,4 +55,14 @@ void Laser::UpdateActor(float deltaTime)
 			}
 		}
 	}
+}
+
+void Laser::AddForce(float force)
+{
+	mMc->AddForce(force);
+}
+
+void Laser::AddForce()
+{
+	mMc->AddForce(mMc->GetForwardSpeed() * 60);
 }

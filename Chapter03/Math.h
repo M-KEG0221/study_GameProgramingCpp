@@ -41,6 +41,17 @@ namespace Math
 			return false;
 		}
 	}
+	//inline bool NearZero(Vector2 val, float epsilon = 0.001f)
+	//{
+	//	if (fabs(val.Length()) <= epsilon)
+	//	{
+	//		return true;
+	//	}
+	//	else
+	//	{
+	//		return false;
+	//	}
+	//}
 
 	template <typename T>
 	T Max(const T& a, const T& b)
@@ -164,6 +175,12 @@ public:
 	friend Vector2 operator*(float scalar, const Vector2& vec)
 	{
 		return Vector2(vec.x * scalar, vec.y * scalar);
+	}
+
+	// Scalar division
+	friend Vector2 operator/(const Vector2& vec, float scalar)
+	{
+		return Vector2(vec.x / scalar, vec.y / scalar);
 	}
 
 	// Scalar *=

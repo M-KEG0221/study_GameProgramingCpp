@@ -21,6 +21,9 @@ private:
 		Alive, Dead
 	};
 	ShipState mState;
+
+
+	class MoveComponent* mMc;
 	class SpriteComponent* mSc;
 
 	float mLaserCooldown;
